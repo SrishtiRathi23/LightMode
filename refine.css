@@ -1,0 +1,246 @@
+/* =========================================================
+   REFINE.CSS — unified design system + responsive pass
+   Loaded LAST so it wins the cascade for shared tokens.
+   Creative direction (cream paper, bold black type, scrapbook,
+   doodles, soft shadows) is preserved — this only makes the
+   sections share ONE system and behave on every screen.
+   The shared girl animation (home -> about) is NOT touched.
+   ========================================================= */
+
+:root{
+  /* layout */
+  --maxw: 1200px;
+  --pad-x: 56px;
+  /* shape — tight corners (per chosen radius style) */
+  --radius: 8px;        /* controls + standard cards */
+  --radius-lg: 14px;    /* large feature panels */
+  --pill: 999px;
+  /* one card material across the whole site */
+  --card: #fbf8ef;
+  --card-bd: rgba(40,30,10,.07);
+  /* one shadow family */
+  --shadow-card: 0 16px 34px -24px rgba(40,30,10,.45), 0 1px 3px rgba(40,30,10,.05);
+  --shadow-card-lg: 0 30px 60px -42px rgba(40,30,10,.5);
+}
+
+/* ---------------------------------------------------------
+   1. SHARED CONTAINER — every top-level section aligns
+   --------------------------------------------------------- */
+.page{
+  max-width: var(--maxw);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+.nav{
+  max-width: var(--maxw);
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+/* Skills stack was shifted right by an asymmetric left pad — realign it
+   with every other section while keeping room for the margin rail/nodes. */
+.page.sk-stack{
+  padding-left: var(--pad-x);
+  padding-right: var(--pad-x);
+}
+.sk-rail{ left: 22px; }
+
+/* ---------------------------------------------------------
+   2. UNIFIED SECTION RHYTHM
+   (home + about hero are intentionally left alone to protect
+    the shared girl animation)
+   --------------------------------------------------------- */
+.projects{ padding-top: 64px; padding-bottom: 88px; }
+.sk-hero{ padding-top: 56px; }
+.sk-stack{ padding-top: 40px; padding-bottom: 88px; }
+.exp-wrap{ padding-top: 72px; padding-bottom: 88px; }
+.hl2-outer{ padding-top: 24px; padding-bottom: 48px; }
+.ct-wrap{ padding-top: 64px; }
+
+/* ---------------------------------------------------------
+   3. ONE CARD SYSTEM — radius / surface / border / shadow
+   --------------------------------------------------------- */
+.panel,
+.strip{
+  background: var(--card);
+  border: 1px solid var(--card-bd);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.core-card,
+.tool-card,
+.learn-card,
+.work-card,
+.metric-card,
+.exp-card,
+.pg-card,
+.ct-card,
+.cc-card{
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+.proj-panel,
+.pg-callout,
+.sk-section,
+.ct-connect{
+  border-radius: var(--radius-lg);
+}
+.proj-panel{ box-shadow: var(--shadow-card-lg); }
+.proj-viewport{ border-radius: var(--radius-lg); }
+.hl2-panel{ border-radius: var(--radius-lg); }
+.hl2-featured{ border-radius: var(--radius); }
+.hl2-row{ border-radius: var(--radius); }
+
+/* controls + media share the tight radius */
+.btn,
+.hl2-btn,
+.ct-field input,
+.ct-field textarea,
+.proj-hero,
+.proj-thumb,
+.pg-thumb{ border-radius: var(--radius) !important; }
+image-slot{ --is-radius: var(--radius); }
+
+/* ---------------------------------------------------------
+   4. TYPOGRAPHY — kill sub-11px text, harmonise display sizes
+   --------------------------------------------------------- */
+.proj-badge,
+.meta-k,
+.stack-k,
+.tool-tag,
+.hl2-fbadge{ font-size: 11px !important; }
+.proj-desc,
+.hl2-desc{ font-size: 13.5px; line-height: 1.55; }
+
+/* metrics: 3-up after removing the filler "Curiosity" card */
+.metric-grid{ grid-template-columns: repeat(3, 1fr); }
+
+/* responsive display titles (kept distinct per section, now fluid) */
+.proj-title{ font-size: clamp(58px, 9vw, 110px); }
+.exp-title{ font-size: clamp(48px, 8vw, 84px); }
+.ct-title{ font-size: clamp(64px, 11vw, 122px); }
+.hl2-title{ font-size: clamp(40px, 6vw, 54px); }
+
+/* ---------------------------------------------------------
+   5. HIGHLIGHTS — reflow after removing the tutorial rail
+      + side scroll indicator (now a clean single column)
+   --------------------------------------------------------- */
+.hl2-main{ grid-template-columns: 1fr; gap: 18px; }
+.hl2-rail,
+.hl2-scrollind,
+.hl2-tophint{ display: none !important; }
+.hl2-featured{ grid-template-columns: 1fr 1fr; }
+/* single, consistent section-transition cue */
+.hl2-bothint{
+  margin-top: 26px;
+  font-size: 15px;
+  color: #8079a3;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------
+   6. RESPONSIVE PASS
+   --------------------------------------------------------- */
+
+/* ---- tablet ---- */
+@media (max-width: 1080px){
+  :root{ --pad-x: 36px; }
+  .word.port{ font-size: 168px; left: 110px; }
+  .word.folio{ font-size: 168px; left: 140px; top: 168px; }
+  .about-title{ font-size: 200px; }
+  .nav-links{ gap: 26px; }
+}
+
+/* ---- collapse nav to the menu button before the links would overflow ---- */
+@media (max-width: 960px){
+  .nav-links{ display: none; }
+}
+
+/* ---- small tablet / large phone: stack the pinned Projects rail ---- */
+@media (max-width: 900px){
+  .proj-stage-wrap{ height: auto !important; margin-top: 24px; }
+  .proj-stage{ position: static !important; height: auto !important; min-height: 0 !important; }
+  .proj-viewport{ overflow: visible !important; display: block !important; }
+  .proj-track{
+    flex-direction: column !important;
+    transform: none !important;
+    gap: 22px !important;
+  }
+  .proj-panel{
+    width: 100% !important;
+    flex: none !important;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .proj-hero{ height: 220px; }
+  .proj-foot{ display: none; }   /* scroll-mechanic hint no longer relevant */
+  .pg-grid{ grid-template-columns: repeat(2, 1fr); }
+
+  /* home + about heroes: scale the art-directed composition down so it
+     stays legible and contained. The girl layer is sized from the slot
+     rects, so it tracks this scale automatically — script untouched. */
+  .stage-home{ transform: scale(.7); transform-origin: top center; height: 560px; }
+  .about-hero{ transform: scale(.7); transform-origin: top center; height: 600px; }
+}
+
+/* ---- phone ---- */
+@media (max-width: 600px){
+  :root{ --pad-x: 20px; }
+
+  .nav{ padding-top: 16px; padding-bottom: 10px; }
+
+  .stage-home{ transform: scale(.5); transform-origin: top center; height: 410px; }
+  .about-hero{ transform: scale(.5); transform-origin: top center; height: 440px; }
+
+  /* about sub-sections stack cleanly */
+  .details-grid{ grid-template-columns: 1fr 1fr; }
+  .detail{ border-right: none; padding: 6px 0; }
+  .timeline-row{ grid-template-columns: 1fr 1fr; gap: 28px 18px; }
+  .timeline-line{ display: none; }
+  .strip{ grid-template-columns: 1fr; gap: 26px; }
+  .hobbies{ flex-wrap: wrap; justify-content: flex-start; gap: 18px 26px; }
+
+  /* projects */
+  .proj-title{ white-space: normal; }
+  .proj-tabs{ flex-wrap: wrap; }
+  .pg-grid{ grid-template-columns: 1fr; }
+  .pg-callout{ flex-direction: column; align-items: flex-start; gap: 18px; text-align: left; }
+
+  /* skills metrics + work */
+  .metric-grid{ grid-template-columns: 1fr 1fr; }
+  .work-track{ grid-template-columns: 1fr; }
+
+  /* highlights featured stacks */
+  .hl2-featured{ grid-template-columns: 1fr; }
+
+  /* contact */
+  .ct-hero{ grid-template-columns: 1fr; }
+  .ct-grid{ grid-template-columns: 1fr; }
+  .ct-row2{ grid-template-columns: 1fr; }
+  .cc-grid{ grid-template-columns: 1fr; }
+  .ct-connect{ padding-left: 22px; padding-right: 22px; }
+}
+
+/* ---- skills carousels: don't let JS translate them off-screen on phones ---- */
+@media (max-width: 760px){
+  .core-track, .tools-row{ transform: none !important; }
+}
+
+/* Tools marquee + core carousel must clip their animated rows so the
+   nowrap track never widens the page (caused horizontal overflow). */
+.tools-area{ overflow-x: hidden; max-width: 100%; }
+.core-viewport{ overflow-x: hidden; }
+/* the work-line SVG has no width attr -> falls back to its 900px intrinsic
+   width and overflowed; pin it to the container. */
+.work-line{ width: 100%; }
+
+/* ---------------------------------------------------------
+   7. REDUCED MOTION — make sure nothing stays hidden
+   --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .ct-rev, .ct-conv, .exp-item.reveal, .hl2-panel.reveal, .reveal{
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
